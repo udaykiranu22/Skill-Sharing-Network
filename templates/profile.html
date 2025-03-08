@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card mt-4 mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4 d-flex justify-content-center align-items-center h-5">
+            {% if profile.image %}
+                <img src="{{ profile.image.url }}" alt="{{ profile.user.username }}" width="150">
+            {% endif %}
+          </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h4 class="card-title">{{ profile.user.username }}'s Profile</h4>
+            <p class="card-text"><strong>Skills:</strong> {{ profile.skills }}</p>
+            <p class="card-text mb-0"><strong>Expertise:</strong> {{ profile.expertise }}</p>
+            {% if has_accepted_request or user == profile.user %}
+                <p class="card-text m-0">------------------------------------------</p>
+                <h5>Additional Details</h5>
+                <p class="card-text"><strong>Department:</strong> {{ profile.department }}</p>
+                <p class="card-text"><strong>ID Card Number:</strong> {{ profile.id_card_number }}</p>
+            {% endif %}
+            {% if user == profile.user %}
+            <p class="card-text m-0">------------------------------------------</p>
+                <h5>Private Details</h5>
+                <p><strong>Email:</strong> {{ profile.email }}</p>
+                <p><strong>Phone Number:</strong> {{ profile.phone_number }}</p>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if not has_accepted_request and user != profile.user %}
+        <p>You must have an accepted skill-sharing request to view additional details.</p>
+    {% endif %}
+    {% if user.is_authenticated and user != profile.user %}
+        <a href="{% url 'send_request' profile.user.username %}" class="btn btn-primary">Send Request</a>
+    {% endif %}
+  </div>
+{% if user == profile.user %}
+<div>
+    <a href="{% url 'edit_profile' %}" class="btn btn-primary m-4">Edit Profile</a>
+    {% if user == profile.user %}
+    <a href="{% url 'feedback' profile.user.username %}" class="btn btn-info">View Feedback</a>
+{% endif %}
+</div>
+   
+{% endif %}
+{% endblock %}
+

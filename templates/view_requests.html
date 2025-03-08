@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-white m-3">Your Skill-Sharing Requests</h2>
+
+{% if received_requests %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for request in received_requests %}
+            <div class="col">
+                <div class="card h-100  ">
+                    <!-- Display the sender's profile image -->
+                    {% if request.sender.studentprofile.image %}
+                        <img src="{{ request.sender.studentprofile.image.url }}" class="card-img-top" alt="{{ request.sender.username }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <strong>{{ request.sender.username }}</strong> wants to learn <strong>{{ request.skill }}</strong>.
+                        </h5>
+                        <!-- Display buttons based on request status -->
+                        {% if request.status == 'Pending' %}
+                            <a href="{% url 'accept_request' request.id %}" class="btn btn-success">Accept</a>
+                            <a href="{% url 'decline_request' request.id %}" class="btn btn-danger">Decline</a>
+                        {% elif request.status == 'Accepted' %}
+                            <h4>Contact Details:</h4>
+                            <p><strong>Email:</strong> {{ request.sender.studentprofile.email }}</p>
+                            <p><strong>Phone Number:</strong> {{ request.sender.studentprofile.phone_number }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Status: {{ request.status }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-white">No requests found.</p>
+{% endif %}
+
+<a href="{% url 'home' %}" class="btn btn-primary mt-3">Back to Home</a>
+{% endblock %}

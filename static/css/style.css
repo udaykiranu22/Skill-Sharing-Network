@@ -1,0 +1,38 @@
+body{
+    background-image: linear-gradient(to right, 
+    rgba(0, 51, 102, 1), 
+    rgba(0, 64, 128, 1), 
+    rgba(0, 89, 179, 1), 
+    rgba(0, 115, 230, 1)
+);
+}
+
+.navbar-u {
+    background-color: #001F3F;
+    color: #FFFFFF;
+}
+
+.navbar-u a {
+    color: #FFFFFF;
+}
+
+.navbar-u a:hover {
+    background-color: #004080;
+}
+
+.con-u{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.start{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.start-u{
+    display: flex;
+    justify-content: center;
+}

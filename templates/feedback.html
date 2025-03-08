@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex flex-row justify-content-evenly m-5">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Feedback Received</h3>
+            {% if feedbacks_received %}
+                <ul>
+                    {% for feedback in feedbacks_received %}
+                        <li>
+                            <strong>From:</strong> {{ feedback.request.sender.username }}<br>
+                            <strong>Rating:</strong> {{ feedback.rating }}<br>
+                            <strong>Comment:</strong> {{ feedback.comment }}<br>
+                            <p class="card-text"><small class="text-body-secondary">Submitted on: {{ feedback.created_at }}</small></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No feedback received yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Feedback Given</h3>
+            {% if feedbacks_given %}
+                <ul>
+                    {% for feedback in feedbacks_given %}
+                        <li>
+                            <strong>To:</strong> {{ feedback.request.receiver.username }}<br>
+                            <strong>Rating:</strong> {{ feedback.rating }}<br>
+                            <strong>Comment:</strong> {{ feedback.comment }}<br>
+                            <p class="card-text"><small class="text-body-secondary">Submitted on: {{ feedback.created_at }}</small></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No feedback given yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if has_accepted_request %}
+    <div class="text-center mt-4">
+        <h3>Submit Feedback</h3>
+        <p>You have an accepted request with {{ profile.user.username }}.</p>
+        <a href="{% url 'submit_feedback' accepted_request_id %}" class="btn btn-success">
+            Submit Feedback
+        </a>
+    </div>
+{% endif %}
+
+<!-- Back to Profile Button -->
+<div class="text-center">
+    <a href="{% url 'profile' profile.user.username %}" class="btn btn-secondary">Back to Profile</a>
+</div>
+
+{% endblock %}
